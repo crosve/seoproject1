@@ -1,0 +1,12 @@
+
+h1{
+    color:blanchedalmond; 
+    text-align: left;
+    font-size: 70px;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
