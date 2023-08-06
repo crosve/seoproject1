@@ -1,4 +1,6 @@
-
+*{
+    background-color: bisque;
+}
 h1{
     color:blanchedalmond; 
     text-align: left;
@@ -9,4 +11,12 @@ header{
     justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    align-items: center;
+
 }

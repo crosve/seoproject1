@@ -1,7 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from forms import RegistrationForm
+from forms import RegistrationForm, LoginForm
 from flask_behind_proxy import FlaskBehindProxy
 from flask_sqlalchemy import SQLAlchemy
+from RecipeSearch import recipesearch
+import requests
 
 
 
@@ -14,6 +16,7 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
+    
     
     return render_template("homepage.html", title="hey")
 
@@ -32,13 +35,44 @@ def signup():
 def aboutpage():
     return render_template('about.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        name = form.username.data
+        email = form.email.data
+        password= form.password.data
+        datatable = User.query.all()
+        for data in datatable:
+            if data.username == name and data.email == email and data.password == password:
+                form = recipesearch()
+                return redirect('/login/recipes')
+        flash(f'Account not found for {name}, please create an account')
+        
 
 
-    
+    return render_template('login.html', form=form)
 
-    return render_template('login.html')
+@app.route('/login/recipes', methods=['GET', 'POST'])
+def recipes():
+
+    form = recipesearch()
+    if form.validate_on_submit():
+        name = form.recipename.data
+        api_url = 'https://api.api-ninjas.com/v1/recipe?query={}'.format(name)
+        response = requests.get(api_url, headers={'X-Api-Key': 'pRSxoIYzO8my7bnUgVOvEA==UP7wKGvHesLLxb5S'})
+        if response.status_code == requests.codes.ok:
+            data = response.json()
+            print(data)
+            return render_template('recipesearch.html', form = form, data = data)
+            
+        else:
+            print("Error:", response.status_code, response.text)
+
+        
+
+
+    return render_template('recipesearch.html', form=form)
 
 
 #maps user attributes to table columns 

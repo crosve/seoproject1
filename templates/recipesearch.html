@@ -1,5 +1,42 @@
 {%extends "layout.html"%}
 {%block content%}
+<!-- add user name -->
+<h1>Welcome</h1>
+
+<div class="Recipe-Search">
+    <form method="post" action="">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search A Recipe You're Interested In!</legend>
+            <div class="form-group">
+                {{ form.recipename.label(class="form-control-label") }}
+                {{ form.recipename(class="form-control form-control-lg")}}
+            </div>
+
+        </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info")}}
+            </div>
+        
+    </form>
+
+    <div class="container">
+        <ul>
+        {% if data %}
+            {% for info in data %}
+                <li> <b>Recipe Name:</b> {{info['title']}}</li>
+                <li><b>Ingredients: </b>{{info['ingredients']}}</li>
+                <li> <b>Servings per Batch:</b>{{info['servings']}}</li>
+                <li> <b>Instructions:</b> {{info['instructions']}}</li>
+                <br>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    </div>
+
+
+
+</div>
 
 
 
