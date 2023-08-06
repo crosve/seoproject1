@@ -100,7 +100,7 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-SECRET_KEY = os.urandom(32)
 if __name__ == '__main__':
+    SECRET_KEY = os.urandom(32)
     app.config['SECRET_KEY'] = SECRET_KEY
     app.run(host="0.0.0.0", port=80)
