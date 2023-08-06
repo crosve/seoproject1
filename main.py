@@ -4,7 +4,8 @@ from flask_behind_proxy import FlaskBehindProxy
 from flask_sqlalchemy import SQLAlchemy
 from RecipeSearch import recipesearch
 import requests
-
+import git
+import os
 
 
 app = Flask(__name__)
@@ -74,6 +75,16 @@ def recipes():
 
     return render_template('recipesearch.html', form=form)
 
+@app.route("/update_server", methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        repo = git.Repo('/home/crosve/seoproject1')
+        origin = repo.remotes.origin
+        origin.pull()
+        return 'Updated PythonAnywhere successfully', 200
+    else:
+        return 'Wrong event type', 400
+
 
 #maps user attributes to table columns 
 class User(db.Model):
@@ -89,7 +100,7 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-
+SECRET_KEY = os.urandom(32)
 if __name__ == '__main__':
-    app.config['SECRET_KEY'] = '2a174b7c4f47cf4fdb504ff4f5f6d772'
+    app.config['SECRET_KEY'] = SECRET_KEY
     app.run(host="0.0.0.0", port=80)
