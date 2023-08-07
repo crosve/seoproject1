@@ -1,6 +1,9 @@
 {%extends "layout.html"%}
 {%block content%}
 
+{% for mesg in get_flashed_messages() %}
+    <h1>{{ mesg }}</h1>
+{% endfor %}
 <div class="content-section">
     <form method="post" action="">
         {{form.hidden_tag()}}

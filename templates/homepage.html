@@ -17,15 +17,20 @@
         of another recipe ever again. Below we have listed just a few of our amazing recipes that you can have access too. 
     </p>
 
-    <div cclass="mx-auto p-2" style="width: 200px;">
-        <h3>English Muffin Pizza</h3>
-        <img src="{{url_for('static', filename='englishmuffinpizza.jpeg')}}" alt="English Muffin Pizza" />
+    <div class="row" >
+        <div class = "column">
+            <h3>English Muffin Pizza</h3>
+            <img src="{{url_for('static', filename='englishmuffinpizza.jpeg')}}" alt="English Muffin Pizza" />
+        </div>
 
-        <h3>Fresh Pasta</h3>
-        <img src="{{url_for('static', filename='pasta.webp')}}" alt="Fresh Psta" />
-
-        <h3>Fresh Chiffon Cake</h3>
-        <img src = "{{url_for('static', filename='cake.jpeg')}}" alt="Fresh Chiffon Cake"/>
+        <div class = "column">
+            <h3>Fresh Pasta</h3>
+            <img src="{{url_for('static', filename='pasta.webp')}}" alt="Fresh Psta" />
+        </div>   
+        <div class="column">
+            <h3>Fresh Chiffon Cake</h3>
+            <img src = "{{url_for('static', filename='cake.jpeg')}}" alt="Fresh Chiffon Cake"/>
+        </div>
     </div>
 
 
