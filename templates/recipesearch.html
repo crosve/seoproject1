@@ -1,24 +1,49 @@
-{%extends "layout.html"%}
-{%block content%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>WebPage</title>
+    <link type="text/css" rel = "stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">{{user}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">logout</a>
+        </li>
+
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="/"></a>
+
+        </li> -->
+      </ul>
+
 <!-- add user name -->
-<h1>Welcome {{currentuser}}</h1>
+    <h1>Welcome {{user}}</h1>
+   
+    <div class="Recipe-Search">
+        <form method="post" action="">
+            {{form.hidden_tag()}}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Search A Recipe You're Interested In!</legend>
+                <div class="form-group">
+                    {{ form.recipename.label(class="form-control-label") }}
+                    {{ form.recipename(class="form-control form-control-lg")}}
+                </div>
 
-<div class="Recipe-Search">
-    <form method="post" action="">
-        {{form.hidden_tag()}}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Search A Recipe You're Interested In!</legend>
-            <div class="form-group">
-                {{ form.recipename.label(class="form-control-label") }}
-                {{ form.recipename(class="form-control form-control-lg")}}
-            </div>
-
-        </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info")}}
-            </div>
-        
-    </form>
+            </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info")}}
+                </div>
+            
+        </form>
 
     <div class="container">
         <ul>
@@ -31,6 +56,8 @@
                 <br>
             {% endfor %}
         {% endif %}
+
+        
         </ul>
     </div>
 
@@ -39,5 +66,7 @@
 </div>
 
 
+</body>
 
-{%endblock content%}
+
+</html>

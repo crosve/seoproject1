@@ -50,6 +50,7 @@ def aboutpage():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+   
     if form.validate_on_submit():
         name = form.username.data
         email = form.email.data
@@ -58,35 +59,43 @@ def login():
         for data in datatable:
             if data.username == name and data.email == email and data.password == password:
                 form = recipesearch()
-                session["name"] = request.form.get("name")
-             
+                    
+                session["name"] = name
+                
                 return redirect('/login/recipes')
         flash(f'Account not found for {name}, please create an account')
         
-
-
-    return render_template('login.html', form=form)
+    elif "name" in session:
+        return redirect('/login/recipes')
+    else:
+        return render_template('login.html', form=form)
 
 @app.route('/login/recipes', methods=['GET', 'POST'])
 def recipes():
-    global currentuser
-    form = recipesearch()
-    if form.validate_on_submit():
-        name = form.recipename.data
-        api_url = 'https://api.api-ninjas.com/v1/recipe?query={}'.format(name)
-        response = requests.get(api_url, headers={'X-Api-Key': 'pRSxoIYzO8my7bnUgVOvEA==UP7wKGvHesLLxb5S'})
-        if response.status_code == requests.codes.ok:
-            data = response.json()
-            print(data)
-            return render_template('recipesearch.html', form = form, data = data)
-            
-        else:
-            print("Error:", response.status_code, response.text)
+    if "name" in session:
+        user = session["name"]
+        form = recipesearch()
+        if form.validate_on_submit():
+            name = form.recipename.data
+            api_url = 'https://api.api-ninjas.com/v1/recipe?query={}'.format(name)
+            response = requests.get(api_url, headers={'X-Api-Key': 'pRSxoIYzO8my7bnUgVOvEA==UP7wKGvHesLLxb5S'})
+            if response.status_code == requests.codes.ok:
+                data = response.json()
+                #print(data)
+                return render_template('recipesearch.html', form = form, data = data, user=user, name=name)
+                
+            else:
+                print("Error:", response.status_code, response.text, user=user)
 
-        
+        return render_template('recipesearch.html', form=form, user=user)
+    
+    else:
+        return redirect("/login")
 
-
-    return render_template('recipesearch.html', form=form, currentuser=currentuser)
+@app.route('/logout')
+def logout():
+    session.pop('name', None)
+    return redirect('/login')
 
 @app.route("/update_server", methods=['POST'])
 def webhook():
