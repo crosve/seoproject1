@@ -3,6 +3,7 @@ from forms import RegistrationForm, LoginForm
 from flask_behind_proxy import FlaskBehindProxy
 from flask_sqlalchemy import SQLAlchemy
 from RecipeSearch import recipesearch
+from flask_wtf.csrf import CSRFProtect
 import requests
 import git
 import os
@@ -12,8 +13,12 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
+csrf = CSRFProtect(app)
 
-
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+app.config['WTF_CSRF_SECRET_KEY'] = "secretkey"
+csrf.init_app(app)
 
 @app.route('/')
 def index():
@@ -101,6 +106,6 @@ with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    SECRET_KEY = os.urandom(32)
-    app.config['SECRET_KEY'] = SECRET_KEY
+    # SECRET_KEY = os.urandom(32)
+    # app.config['SECRET_KEY'] = SECRET_KEY
     app.run(host="0.0.0.0", port=80)
