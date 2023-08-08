@@ -20,3 +20,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login In')
     
+class inputRecipe(FlaskForm):
+    recipeName = StringField('recipename', validators=[DataRequired(), Length(min=2, max=100)])
+    submit = SubmitField('Save Recipe')

@@ -16,19 +16,22 @@
           <a class="nav-link active" aria-current="page" href="#">{{user}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout">logout</a>
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/login/recipes">Search Recipes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/saved">Saved Recipes</a>
 
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="/"></a>
-
-        </li> -->
+        </li>
       </ul>
 
 <!-- add user name -->
-    <h1>Welcome {{user}}</h1>
+    
    
     <div class="Recipe-Search">
+        <h1>Welcome {{user}}</h1>
         <form method="post" action="">
             {{form.hidden_tag()}}
             <fieldset class="form-group">
@@ -45,6 +48,20 @@
             
         </form>
 
+        <form method="post" action="">
+            {{recipeform.hidden_tag()}}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Save a recipe you like</legend>
+                <div class="form-group">
+                    {{ recipeform.recipeName.label(class="form-control-label") }}
+                    {{ recipeform.recipeName(class="form-control form-control-lg")}}
+                </div>
+            </fieldset>
+                <div class="form-group">
+                    {{ recipeform.submit(class="btn btn-outline-info")}}
+            </div>
+        </form>
+
     <div class="container">
         <ul>
         {% if data %}
@@ -53,10 +70,11 @@
                 <li><b>Ingredients: </b>{{info['ingredients']}}</li>
                 <li> <b>Servings per Batch:</b>{{info['servings']}}</li>
                 <li> <b>Instructions:</b> {{info['instructions']}}</li>
+
                 <br>
             {% endfor %}
         {% endif %}
-
+    </div>
         
         </ul>
     </div>

@@ -13,22 +13,36 @@
 <body>
     <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"> No Active User</a>
+          <a class="nav-link active" aria-current="page" href="#">{{user}}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/">Homepage</a>
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/signup">Signup</a>
+            <a class="nav-link" href="/login/recipes">Search Recipes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
+            <a class="nav-link" href="/saved">Saved Recipes</a>
 
+        </li>
       </ul>
-    {%block content%} {%endblock content%}
+
+
+<h1>All saved recipes</h1>
+<div class="allsaved">
+    <ul>
+    {% if personalrecipes %}
+        {% for info in personalrecipes %}
+            <li> <b>Recipe Name:</b> {{info}}</li>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+
+
 </body>
 
 
 </html>
-
